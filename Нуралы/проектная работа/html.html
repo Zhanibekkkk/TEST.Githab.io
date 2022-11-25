@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Көрнекті совет математиктері А.Н.Колмогоров пен А.Д.Александров ұсынған   жіктеу    бойынша математиканың даму тарихы неше кезеңге бөлінеді?",
+                "A) 2",
+                "B) 3",
+                "C) 4",
+                "D) 5",
+                "E) 6",
+                3],
+            ["Вавилондықтар санаудың позициялық жүйесінің қолданған түрін анықтаңыз",
+                "A)	екілік",
+                "B)	ондық",
+                "C)	елулік",
+                "D)	алпыстық",
+                "E)	жүздік",
+                4],
+            ["Фалес, Пифагор, Детель, Гиппократ, Евдокс, Аристотель, Евклид, Архимед, Аполоний ғалымдары математиканың қай кезеңіне жатады?",
+                "A)	Элементар математика",
+                "B)	Дискретті математика",
+                "C)	Айнымалы шамалар",
+                "D)	Қазіргі математика",
+                "E)	Аналитикалық",
+                1],
+            ["Ол Отырарда туған. Арифметиканы практикалық және теориялық арифметика деп екіге бөлген ғалым",
+                "A)	Әл-Хорезми",
+                "B)	Әбу-насыр әл-Фараби",
+                "C)	Әбу-Райхан әл-Бируни",
+                "D)	Ұлықбек",
+                "E)	Омар Хаям",
+                2],
+            ["Негізгі ғылыми еңбектері қозғалыстың орнықтылық теориясына, математика, физика теңдеулеріне, дифференциалдық теңдеулердің шексіз жүйелеріне, теориялық	және	қолданбалы механикаға, математика тарихы мен оның методологиясына арнаған Қазақстандық математик-ғалым",
+                "A)	А.Д.Тайманов",
+                "B) Н.Қ.Білиев",
+                "C) Ә.Ә.Ермеков",
+                "D)	И.Ақбергенов",
+                "E) О.А.Жәутіков",
+                4],
+            ["Материяның инерциялық және гравитациялық қасиетін анықтайтын физикалық шаманың анықтаңыз",
+                "A) метр",
+                "B)	жылдамдық",
+                "C)	үдеу",
+                "D) масса",
+                "E)	литр",
+                4],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0, procent_vip = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Результаты:</h4>Правильных ответов: " + tAnswers + "<br>Неправильных ответов: " + wAnswers + "";
+            // document.getElementById('rezultat').innerHTML = "<span id='ot'>Задания выполнены верно на " + procent_vip + "%.</span><br><br>";
+            tAnswers = 0, wAnswers = 0;
+            vsego_zadach = 6;
+            procent_vip = procent_vip / vsego_zadach * 100;
+            procent_vip = procent_vip.toFixed();
+        }
+
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>Математика ғылымы</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="1 нұсқаға өту" onclick="goNext(0)" />
+            <button class="btn">
+                <a href="html1.html">2 нұсқаға өту</a>
+            </button>
+        </div>
+    </div>
+    <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h2>Бөлінгіштік белгілері</h2>
+                    <p>«2-ге» бөлінгіштік белгілері <br>2-ге қалдықсыз бөлінетін сан деп аталады тіпті, бөлінбейтін -
+                        тақ. Санның соңғы цифры жұп (2, 4, 6, 8) немесе нөл болса, ол «2-ге» қалдықсыз бөлінеді.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h2>«4-ке» бөлінгіштік белгілері</h2>
+                    <p>Сан «4-ке» қалдықсыз бөлінеді, егер оның соңғы екі цифры нөл болса немесе қосындыда «4-ке»
+                        қалдықсыз бөлінетін санды құраса</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h2>«8»-ге бөлінгіштік белгілері</h2>
+                    <p>Сан "8"-ке қалдықсыз бөлінеді, егер оның соңғы үш цифры нөл болса немесе қосындыда "8"-ке
+                        қалдықсыз бөлінетін сан болса (мысал: 1000 – соңғы үш цифр «00», ал 1000-ды 8-ге бөлгенде
+                        125
+                        шығады; 104 – «12»-нің соңғы екі цифры 4-ке бөлінеді, ал 112-ні 4-ке бөлгенде 28 шығады;
+                        және
+                        т.б.)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </script1>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Үш адам ақша ұтып алған. I адамға осы соманың 1 / 4 - i, II адамға осы 4 соманың 1 / 7 - i, III адамға 17 флорин тиді. Ұтыстың шамасы қандай болған?",
+                "A)	20 флорин",
+                "B)	24 флорин",
+                "C)	28 флорин",
+                "D)	32 флорин",
+                "E)	49 флорин",
+                3],
+            ["Өзінің үштен екісіне және бірлікке арттырылған сан 10-ға тең. Сол санды табу керек.",
+                "A) 5,4",
+                "B)	6",
+                "C)	7,2",
+                "D)	8",
+                "E)	9,4",
+                1],
+            ["Бір санның 4-ші дәрежесін сол санның жартысына бөлгенде және 14 1  ге 4 арттырғанда 100-ге тең болу керек. Сол санды тап.",
+                "A)	1,5",
+                "B)	2",
+                "C)	2,5",
+                "D)	3",
+                "E)	3,5",
+                5],
+            ["Біреу баламды оқуға берейін деп едім,класыңызда қанша оқушы бар екен деп сұрапты мұғалімнен. Сонда мұғалім былай жауап беріпті. Класымыздағы бала санына енді осындай, оның жартысындай, төрттен біріндей бала қосылып және сіздің балаңыз келсе, 100 болады. Мұғалімнің қанша оқушысы болған?",
+                "A)	42",
+                "B)	40",
+                "C)	27",
+                "D)	36",
+                "E)	25",
+                4],
+            ["Екі санның айырмасы екіге тең, ал олардың қатынасы екіге кері санға тең. Осы сандарды табу керек",
+                "A)	1 кг",
+                "B)	1,5 кг",
+                "C)	2 кг",
+                "D)	2,5 кг",
+                "E)	3 кг",
+                2],
+            ["Бір адам жыл аяғына дейін киім және 10 флорин алмақшы болып жалданды. Бірақ 7 ай өткен соң жұмысты тоқтатты да, есеп айырысқанда киім және 2 флорин ақша алды. Киім қаншаға бағаланған?",
+                "A)	15",
+                "B)	16,4",
+                "C)	13",
+                "D)	9,2",
+                "E)	8,6",
+                4],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Тарихи есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="1 нұсқаға өту" onclick="goNext(0)" />
+            <button class="btn">
+                <a href="tests5n.html">2 нұсқаға өту</a>
+            </button>
+        </div>
+    </div>
+
+    <!-- <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 1</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos ratione nisi error
+                        numquam
+                        laudantium perspiciatis nihil iure saepe!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 2</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                        aspernatur
+                        fuga,</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                </script1> -->
+
+</html>

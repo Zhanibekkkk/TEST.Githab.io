@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Үш бригадада 125 адам бар. Екінші бригадада біріншісінің – 75%-і, үшіншісінен 5 адам кем болса, екінші және үшінші бригададағы адамдар санының қосындысын табыңыз",
+                "A)	63",
+                "B)	54",
+                "C)	85",
+                "D)	77",
+                "E)	94",
+                4],
+            ["Теңіз суының құрамында 5% тұз бар. Құрамындағы тұздың концентрациясы 2% болу үшін 30 кг теңіз суына қанша кг тұщы су қосу қажет",
+                "A)	15 кг",
+                "B)	20 кг",
+                "C)	45 кг",
+                "D)	40 кг",
+                "E)	36 кг",
+                3],
+            ["Екі таңбалы санның цифрларының қосындысы 13-ке тең. Егер екі таңбалы санның цифрларының орнын ауыстырса, берілген саннан 45-ке артық сан шығады. Берілген сан мен шыққан санның қосындысын табыңыз",
+                "A)	86",
+                "B)	95",
+                "C)	101",
+                "D)	125",
+                "E)	143",
+                5],
+            ["Ертас 100 және 20 теңгелерді қағаз бетіне қойып, айналдыра сызып шыққанда екі шеңбер пайда болды. Үлкен шеңбердің ұзындығы 24𝜋. Кіші және	үлкен	шеңберлердің радиустарының қатынастары 3:4-ке тең. 20 теңгенің радиусы нешеге тең?",
+                "A)	24",
+                "B)	20",
+                "C)	8",
+                "D)	9",
+                "E)	18",
+                4],
+            ["Шешесі 42-жасқа келгенде үлкен қызы 19, ортаншысы 11, кенжесіне 2 жас толды. Қанша уақыттан кейін шешесінің жасы үш қызының жасының қосындысына тең болады?",
+                "A)	9 жылдан кейін",
+                "B)	6 жылдан кейін",
+                "C)	5 жылдан кейін",
+                "D)	8 жылдан кейін",
+                "E)	7 жылдан кейін",
+                3],
+            ["Берілген төрт санның алғашқы үшеуі 5-ке, 3-ке, 20-ға пропорционал, ал төртінші сан үшіншісінің 15%-не тең. Ал егер төртінші сан қалғандарының қосындысынан 375-ке кем болса, олар қандай сандар болғанын табыңыз",
+                "A)	30; 36; 325; 46",
+                "B)	100; 60; 40; 185",
+                "C)	50; 30; 200; 95",
+                "D)	75; 45; 300; 45",
+                "E)	90; 54; 360; 129",
+                4],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Проблемалық есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="Бастау" onclick="goNext(0)" />
+
+        </div>
+    </div>
+
+
+    <!-- <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 1</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos ratione nisi error
+                        numquam
+                        laudantium perspiciatis nihil iure saepe!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 2</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                        aspernatur
+                        fuga,</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                </script1> -->
+
+</html>

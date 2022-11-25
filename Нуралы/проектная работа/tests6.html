@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Кітапханада ағылшын, француз және неміс тілінде кітаптар бар. Ағылшын тіліндегі кітаптар барлық кітаптардың 40%-ін, француз тіліндегілер ағылшын тіліндегінің 75%-ін құрайды, ал қалған 210    кітап   неміс   тіліндегілер. Кітапханада барлығы неше кітап?",
+                "A)	650",
+                "B)	700",
+                "C)	750",
+                "D)	800",
+                "E)	850",
+                2],
+            ["Салтанат есепті бірінші болып шығарып, есептің шешуін 5 оқушыға, ал олардың әрқайсысы 5 оқушыға түсіндірді. Сонда сыныптағы барлық оқушылар есепті шығарып болды. Сыныптағы оқушылар санын анықтаңыз",
+                "A) 31",
+                "B)	30",
+                "C)	25",
+                "D)	26",
+                "E)	36",
+                1],
+            ["Жеміс сусынын дайындау үшін алма, өрік және шие сатып алынды. Олардың массаларының қатынасы 5:4:3 қатынасындай. Алма шиеден 1,2 кг артық. Сусын дайындау үшін барлығы неше килограмм жеміс сатып алынды",
+                "A)	0,6 кг",
+                "B)	6,8 кг",
+                "C)	6,5 кг",
+                "D)	7,2 кг",
+                "E)	8 кг",
+                4],
+            ["Тік төртбұрышты алаңның ауданы 73500 м2. Масштабы 1:7000 сызбада осы алаңды кескіндегенде, ұзындығы 5 см тік төртбұрыш шықты. Алаңның ені қанша?",
+                "A)	35 м",
+                "B)	350 м",
+                "C)	210 м",
+                "D)	21 м",
+                "E)	3500 м",
+                3],
+            ["Қабырғасы 15 см шаршының әр қабырғасын 40%-ке қысқартса, шаршының ауданы неше процентке кемиді?",
+                "A)	40%",
+                "B)	20%",
+                "C)	64%",
+                "D)	80%",
+                "E)	50%",
+                3],
+            ["Үш дәптер мен бес блокнотқа 47 тг төленді. Егер екі дәптер үш блокноттан 6 тг қымбат болса, онда дәптер мен блокноттың жеке жеке бағасы қанша?",
+                "A)	8 тг, 5 тг",
+                "B)	9 тг, 4 тг",
+                "C)	10 тг, 4 тг",
+                "D)	7 тг, 6 тг",
+                "E)	11 тг, 2 тг",
+                2],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Проблемалық есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="1 нұсқаға өту" onclick="goNext(0)" />
+            <button class="btn">
+                <a href="tests6n.html">2 нұсқаға өту</a>
+            </button>
+        </div>
+    </div>
+    <!-- <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 1</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos ratione nisi error
+                        numquam
+                        laudantium perspiciatis nihil iure saepe!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 2</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                        aspernatur
+                        fuga,</p>
+                </div>
+            </div>
+            <div class="card">
+                <h1>card 3</h1>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                    aspernatur
+                    fuga,</p>
+                <img src="./images/Images/services-icon.png" alt="">
+                </script1> -->
+
+</html>

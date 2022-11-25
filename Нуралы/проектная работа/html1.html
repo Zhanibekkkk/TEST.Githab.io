@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["п-ші дәрежелі теңдеуді олардың берілген түбірлері арқылы құру әдісін көрсеткен, алгебраны әрі сандық дамытуда үлес қосқан математик",
+                "A)	С.Феро",
+                "B)	Н.Тарталья",
+                "C)	Ф.Виет",
+                "D)	Л.Пизанский",
+                "E)	Н.Шюке",
+                3],
+            ["Сандарды көбейту, квадраттау, квадрат және куб, түбір табу, бөлу таблицаларын жасаған; бірінші, екінші, үшінші дәрежелі теңдеуге келтірілетін есептер шеше білген",
+                "A)	Египеттіктер",
+                "B)	Вавилондықтар",
+                "C)	Орта Азия",
+                "D)	Рим дәуірі",
+                "E)	Қытай мен Үндістан",
+                2],
+            ["Дифференциалдық теңдеулер, арнаулы функциялар, конформдық түрлендіру теориясының және олардың механикада қолданылу мәселелерін зерттеумен айналысқан Қазақстандық математика ғалым, қазақстан шыққан тұңғыш доцент.",
+                "A)	А.Д.Тайманов",
+                "B)	Н.Қ.Білиев",
+                "C)	Ә.Ә.Ермеков",
+                "D)	С.Х.Боқаев",
+                "E)	О.А.Жәутіков",
+                4],
+            ["Айнымалы шамалар математикасы немесе жоғары математиканың туу, қалыптасу кезеңі",
+                "A)	бірініші",
+                "B)	екінші",
+                "C)	үшінші",
+                "D)	төртінші",
+                "E)	бесіншісі",
+                3],
+            ["Планиметрияның, стереометрияның кейбір	мәселелері	талданған	атақты «Негіздер» еңбегінің авторы",
+                "A)	Архимед",
+                "B)	Эратосфен",
+                "C)	Пифагор",
+                "D)	Птолемей",
+                "E)	Евклид",
+                5],
+            ["Евклидтің бесінші постулатын аксиома деп дәлелдеген кім?",
+                "A)	А.Коши",
+                "B)	К.Вейерштрасс",
+                "C)	Р.Декарт",
+                "D)	Н.Лобачевский",
+                "E)	П.Ферма",
+                4],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест бітті!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>Математика ғылымы</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="Бастау" onclick="goNext(0)" />
+
+        </div>
+    </div>
+
+    <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h2>«3» пен «9»-ға бөлінгіштік белгілері</h2>
+                    <p>Қалдықсыз, цифрларының қосындысы «3-ке» қалдықсыз бөлінетін сандар ғана «3-ке» бөлінеді; "9"
+                        бойынша - цифрларының қосындысы "9"-ға қалдықсыз бөлінетін сандар ғана</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h2>«5-ке» бөлінгіштік белгілері</h2>
+                    <p>Қалдықсыз сандар соңғы цифры «0» немесе «5» болатын «5-ке» бөлінеді.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h2>«5-ке» бөлінгіштік белгілері</h2>
+                    <p><small>Қалдықсыз сандар "25"-ке бөлінеді, оның соңғы екі цифры нөл немесе қосындыда "25"-ке
+                            қалдықсыз бөлінетін санды құрайды (яғни, "00", "25"-пен аяқталатын сандар, "50",
+                            "75"</small></p>
+                </div>
+                </script1>
+
+</html>

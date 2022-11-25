@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Жүгі бар ұшақ 2640 кг. Ондағы жүк 990кг жүктің массасы ұшақтың массасының неше пайызы?",
+                "A)60%",
+                "B)70%",
+                "C)62,5%",
+                "D)60,5%",
+                "E)37,5%",
+                1],
+            ["Кітапханада 35 000 кітап бар. Оның 22%-і әдеби кітаптар. Кітапханадағы әдеби кітаптардың саны қанша ?",
+                "A)1590",
+                "B)	5000",
+                "C)	7700",
+                "D)	7500",
+                "E)	17500",
+                3],
+            ["Автомобиль бөліктеріне жарамды болаттың құрамында 3,4% никель бар. 2,2 тонна болаттың құрамындағы никельдің массасын табыңыз",
+                "A)	0,748т",
+                "B)	1,545т",
+                "C)	0,647т",
+                "D)	0,0647т",
+                "E)	0,0748т",
+                5],
+            ["Заттың бағасы алғашқыда 2700 тг болды. Заттың осы бағамен өтімділігі жақсы болған соң оның бағасын 8%-ке қымбаттатты. Қымбаттаған бағасы неше теңге?",
+                "A)	2815 тг",
+                "B)	2916 тг",
+                "C)	2950 тг",
+                "D)	2725 тг",
+                "E)	2830 тг",
+                2],
+            ["Оқушы кітаптың 36 бетін оқығанда, ол кітап беттерінің 12%-ін оқыды. Кітапта барлығы неше бет бар?",
+                "A)	80",
+                "B) 120",
+                "C) 200",
+                "D)	300",
+                "E) 350",
+                4],
+            ["Қоспаның құрамының 58%-і мыс, 24%-і мырыш, қалғандары қорғасын. Қоспадағы қорғасын 27 г. Қоспаның толық массасын табыңдар.",
+                "A) 150 г",
+                "B)	200 г",
+                "C)	270 г",
+                "D) 130 г",
+                "E)	180 г",
+                1],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Пайызға берілген есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="Бастау" onclick="goNext(0)" />
+
+        </div>
+    </div>
+
+
+    <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>Сандық теңсіздіктердің қасиеттері</h1>
+                    <p>1) Егер а< b , содан кейін кез келген үшін в: a + c< b + с . <br>2) Егер а< b және c> 0, содан
+                                кейін ретінде< bс . <br>3) Егер а< b және в< 0 , содан кейін ac> bc. <br>4) Егер а< b ,
+                                            ажәне бонда бір белгі 1/a> 1/b.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>Сандық теңсіздіктердің қасиеттері</h1>
+                    <p>5) Егер а< b және в< d , содан кейін a + c< b + d , а - д< b — c . <br>6) Егер а< b , в< d , a>
+                                0, b > 0, c > 0, d > 0, содан кейін ак< bd . <br>7) Егер а< b , a> 0, b > 0, содан кейін
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="" </body>
+                </script1>
+
+</html>

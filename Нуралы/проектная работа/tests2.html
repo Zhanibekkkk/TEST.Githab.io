@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Дүкенге 221 кг алма және 884 кг алмұрт әкелінді. Дүкенге қанша пайыз алмұрт әкелінді?",
+                "A) 75%",
+                "B) 25%",
+                "C) 20%",
+                "D) 80%",
+                "E) 40%",
+                4],
+            ["900-дің 15%-ін табыңыз:",
+                "A)	1350",
+                "B)	6",
+                "C)	135",
+                "D)	75",
+                "E)	8",
+                3],
+            ["Сәуле кітаптың 25 бетін оқыды. Бұл кітаптың барлық бетінің 20%-і. Сәуле оқыған кітапта барлығы неше бет бар?",
+                "A)	130",
+                "B)	100",
+                "C)	125",
+                "D)	70",
+                "E)	90",
+                3],
+            ["Трактор 7 сағатта жердің 35% -ін жыртты. Қалған жерді жыртуға қанша уақыт қажет?",
+                "A)	20 сағ",
+                "B)	13 сағ",
+                "B)	13 сағ",
+                "D)	5 сағ",
+                "E)	жауабы жоқ",
+                2],
+            ["Процент түрінде жазыңыз:119 / 200 ( '/' деген бөлшектер) ",
+                "A)	17%",
+                "B) 25%",
+                "C)	20%",
+                "D) 80%",
+                "E) 90%",
+                1],
+            ["Бақта барлығы 120қайың мен қарағай бар.Қарағай барлық ағаштың 60%-ын құраса, бақта қанша қайың бар?",
+                "A) 75",
+                "B)	81",
+                "C)	750",
+                "D) 48",
+                "E)	жауабы жоқ",
+                4],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Пайызға берілген есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="1 нұсқаға өту" onclick="goNext(0)" />
+            <button class="btn">
+                <a href="tests2n.html">2 нұсқаға өту</a>
+            </button>
+        </div>
+    </div>
+
+    <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h3>"10", "100" және "1000"-ға бөлінгіштік белгілері</h3>
+                    <p><small>Қалдықсыз тек соңғы цифры нөлге тең сандар ғана «10-ға, соңғы екі цифры нөлге тең сандар
+                            ғана «100-ге», соңғы үш цифры нөлге тең сандар ғана «1000-ға» бөлінеді.</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h2>«11-ге» бөлінгіштік белгілері</h1>
+                        <p><small>Қалдықсыз тек тақ орындарды алып жатқан цифрлардың қосындысы не жұп орындарды алып
+                                жатқан
+                                цифрлардың қосындысына тең, не одан «11-ге» бөлінетін санмен ерекшеленетін сандар ғана
+                                «11-ге» бөлінеді.</small></p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h3>Ақырлы ондық бөлшекті рационал бөлшекке айналдыру формуласы:</h1>
+                        <p>Пропорциялар <br>Екі бірдей қатынас пайда болады пропорция:
+
+                            Пропорцияның негізгі қасиеті</p>
+                </div>
+                </script1>
+
+</html>

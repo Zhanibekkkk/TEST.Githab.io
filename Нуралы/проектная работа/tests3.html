@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Моторлы қайық ағыспен 12 км, ағысқа қарсы 12 км жүрді. Ағысқа қарсы жүрген жолына ағыспен жүрген жолынан 1 сағат артық уақыт жібереді. Қайықтың тынық судағы жылдамдығы 9 км/сағболса, ағыс жылдамдығын табыңыз",
+                "A) 3 км/сағ",
+                "B)	2 км/сағ",
+                "C)	2,5 км/сағ",
+                "D)	3,5 км/сағ",
+                "E)	1 км/сағ",
+                1],
+            ["Жылдамдығы 3,6 км/сағ жаяу адам ара қашықтықты 2,5 сағатта өтті. адам 4,5 км/сағ жылдамдықпен жүре отырып осы қашықтықты қанша уақытта өтеді?",
+                "A)	1 сағатта",
+                "B)	2 сағатта",
+                "C)	3 сағатта",
+                "D)	0,5 сағатта",
+                "E)	4 сағатта",
+                2],
+            ["Тынық судағы жылдамдығы 15 км/сағ болатын моторлы қайық өзен ағысының бойымен 139 1 км 3 жүзіп барып, қайта қайтып келді. Қайық барлық жолға 20 сағ уақыт жұмсаған болса, өзен ағысының жылдамдығын табыңыз",
+                "A)	3 км/сағ",
+                "B)	5 км/сағ",
+                "C)	4 км/сағ",
+                "D)	2 км/сағ",
+                "E)	6 км/сағ",
+                3],
+            ["Туристер межелеген жерге үш күнде жетті. Олардың бірінші күгні жүрген жолының екінші күні жүрген жолына қатынасы 7:5 қатынасындай. Ал екінші күні жүрген жолының үшінші күні жүрген жолына қатынасы 3:2 қатынасындай. Туристер үш күнде барлығы 460 км жол жүрді. Туристер бірінші күні және екінші күні барлығынеше километр жол жүрген?",
+                "A)	380 км",
+                "B)	360 км",
+                "C)	250 км",
+                "D)	310 км",
+                "E)	280 км",
+                2],
+            ["Моторлы қайық А-дан В пунктіне дейінгі жолды 2,4 сағатта, ал қайтарда 4 сағатта жүріп өтті. Моторлы қайықтың суға қатысты жылдамдығы 16 км/сағ болса, өзен ағысының жылдамдығы қандай?",
+                "A)	5 км/сағ",
+                "B)	8 км/сағ",
+                "C)	3 км/сағ",
+                "D)	4 км/сағ",
+                "E)	6 км/сағ",
+                4],
+            ["Ара қашықтығы 462 км екі қаладан біріне бірі қарсы екі машина бір уақытта шықты. Бір машинаның жылдамдығы 86 км/сағ, ал екіншісінің 68 км/сағ. 2 сағаттан кейін екеуінің арасындағы қашықтық қандай болады?",
+                "A)	160 км",
+                "B)	210 км",
+                "C)	144 км",
+                "D)	150 км",
+                "E)	154 км",
+                5],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Қозғалысқа берілген есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="1 нұсқаға өту" onclick="goNext(0)" />
+            <button class="btn">
+                <a href="tests3n.html">2 нұсқаға өту</a>
+            </button>
+        </div>
+    </div>
+    <!-- <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 1</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos ratione nisi error
+                        numquam
+                        laudantium perspiciatis nihil iure saepe!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 2</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                        aspernatur
+                        fuga,</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="" </body>
+                </script1> -->
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Түймедақты кептірген кезде салмағының 35%-ы жоғалады. Кептірілген түймедақтан 8 кг алу қажет. Сонда теру керек түймедақтың салмағы",
+                "A) 10 кг",
+                "B) 30 кг",
+                "C) 50 кг",
+                "D) 70 кг",
+                "E) 90 кг",
+
+                3],
+            ["Бір автомобиль тәулігіне 20 кг газ бөліп шығарса, 6 автомобиль 1 айда қанша кг газ бөліп шығарады?",
+                "A)	3200 кг",
+                "B)	3400 кг",
+                "C)	3600 кг",
+                "D)	3800 кг",
+                "E)	4000 кг",
+
+                3],
+            ["Адам бір рет тыныс алғанда 500 мл. ауа жұтады. Әр жұтқан сайын 5% оттегін қабылдайды. Сонда неше мл. оттегің жұтады?",
+                "A)	25 мл",
+                "B)	30 мл",
+                "C)	35 мл",
+                "D)	40 мл",
+                "E)	45 мл",
+                1],
+            ["Адамның ағзасы 65% судан тұрады. Әсемнің салмағы 35 кг. Әсемнің ағзасындағы су неше килограмм болады?",
+                "A) 13,75",
+                "B)	18,75",
+                "C)	20,25",
+                "D)	22,75",
+                "E)	23",
+                4],
+            ["1 үйеңке ағашы бір жылда 2 кг 100 г оттегі бөліп шығарады. Ал шегіршін ағашы одан 7 есе көп оттегі бөліп шығарса, онда жылына бір үйеңке және шегіршін ағаштары қанша кг оттегі бөліп шығарады?",
+                "A)	16 кг 800 г",
+                "B)	10 кг 500 г",
+                "C)	18 кг 200 г",
+                "D)	13 кг 900 ",
+                "E)	8 кг 600 г",
+                1],
+            ["1 га қылқан жапырақты орман жылына 35 т шаңды сүзеді, ал жапырақты 2 есе көп. Жылына 700 тонна шаңды сүзу үшін қанша гектар жапырақты ағаш отырғызу керек?",
+                "A)	5 га",
+                "B)	10 га",
+                "C)	15 га",
+                "D)	20 га",
+                "E)	25 га",
+                2],
+
+
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Экологиялық есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="1 нұсқаға өту" onclick="goNext(0)" />
+            <button class="btn">
+                <a href="tests4n.html">2 нұсқаға өту</a>
+            </button>
+        </div>
+    </div>
+    <!-- <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 1</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos ratione nisi error
+                        numquam
+                        laudantium perspiciatis nihil iure saepe!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 2</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                        aspernatur
+                        fuga,</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="" </body>
+                </script1> -->
+
+</html>

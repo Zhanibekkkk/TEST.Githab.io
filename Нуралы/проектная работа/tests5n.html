@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["Бір	адам	қазынаның	1 / 13	-	ін	алды.	Одан қалғанының	1 / 17	- ін   екінші   біреу   алды.   Ол қазынада 150 қалдырды. Әуелде қазынада қанша болғанын білгіміз келеді?",
+                "A) 163 19/32",
+                "B)	172 21/32",
+                "C)	181 17/32",
+                "D)	77 1/32",
+                "E)	155 23/32",
+                2],
+            ["10 санын айырмасы 5 болатын екі бөлікке бөлу керек",
+                "A) 6,5 пен 1,5",
+                "B)	8,5 пен 3,5",
+                "C) 8 бен 3",
+                "D)	7,5 пен 2,5",
+                "E)	7 мен 2",
+                4],
+            ["Көпес 138 кез қара және көк шұғаны 540 сомға сатып алды. Егер бір аршын көк шұға 5 сом, ал қара шұға 3 сом тұрса, әрқайсысынан неше кез мата алған?",
+                "A)	75; 63",
+                "B)	65; 44",
+                "C)	80; 35",
+                "D)	70; 55",
+                "E)	73; 45",
+                1],
+            ["Диофанттың балалық шағы - өмірінің алтыдан бірі, жастық шағы – он екіден бірі, ал баласыз өткен ерлі-зайыпты өмірінің жетіден бірі және тағы 5 жыл өткенде ұлды болды. Әкесінің жарты жасына келгенде ұлы дүние салды, бұдан кейін Диофант тек 4 жыл ғана өмір сүрді. Диофант неше жыл сүрген еді?",
+                "A)	75",
+                "B)	80",
+                "C)	84",
+                "D)	90",
+                "E)	102",
+                3],
+            ["Бақташы 70 өгіз айдап келеді. Оған мынадай сұрақ берілген: Үлкен табынының бұл айдап келе жатқаның қанша? Бақташы жауабы: Табындағы барлық малдың үштен бірінің үштен екісі. Есептеп көр!",
+                "A) 250",
+                "B)	270",
+                "C)	285",
+                "D)	300",
+                "E)	315",
+                5],
+            ["Көпестің жинақтаған азды-көпті ақшасы бар еді. Ол жыл сайын семьясының қажетіне 100 фунт ақша ұстап, қалған ақшасына оның үштен біріндей ақша қосып отыратын. Үш жыл өткеннен кейін ол қаражатының екі есе көбейгендігін байқады. Әуелде оның қанша ақшасы болған еді?",
+                "A)	1480 фунт",
+                "B)	1500 фунт",
+                "C)	1520 фунт",
+                "D)	1640 фунт",
+                "E)	1680 фунт",
+                1],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Тарихи есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="Бастау" onclick="goNext(0)" />
+
+        </div>
+    </div>
+
+
+    <!-- <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 1</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos ratione nisi error
+                        numquam
+                        laudantium perspiciatis nihil iure saepe!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 2</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                        aspernatur
+                        fuga,</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                </script1> -->
+
+</html>

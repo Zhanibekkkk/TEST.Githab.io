@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесттер</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="shortcut icon" href="images/free-icon-education-3160736.png" type="image/x-icon">
+</head>
+
+<body>
+</body>
+
+</html>
+<html>
+
+<head>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <script>
+        var questions = [ // Сначала вопрос, потом варианты через запятую, потом правильный ответ
+            ["1 адам сәуір айында 2 күнде бір рет кір жуып, 5 күнде 1 рет ваннаға түсіп отырса, осы ай ішінде неше лирт суды үнемдеді? Сәуір айында неше литр су пайдаланды?",
+                "A)	4500 л үнем,3800 л пайдалану",
+                "B)	5500 л үнем, 3860 л пайдалану",
+                "C)	5550 л үнем, 3890 л пайдалану",
+                "D)	5000 л үнем,3700 л пайдалану",
+                "E)	5560 л үнем, 3860 л пайдалану",
+                3],
+            ["Көк шегіртке 1 айда 42 өсімдік битін, одан 3 есе аз кішкене шіркей, ал шіркейлерге қарағанда шыбындарды 6 есе көп жесе, ол 1 айда қанша жәндіктерді жейді?",
+                "A) 420",
+                "B) 360",
+                "C) 270",
+                "D) 260",
+                "E) 140",
+                5],
+            ["Тәулігіне адам 0,8 кг оттегін тұтынады, физикалық жүктеме кезінде 1,3 кг дейін. Орта шамамен ағаш тәулігіне 0,2 кг оттегін бөліп шығарады. Бір адамға еркін демалу үшін қанша ағаш керек?",
+                "A)	1 ағаш",
+                "B)	2 ағаш",
+                "C)	3 ағаш",
+                "D)	4 ағаш",
+                "E)	5 ағаш",
+                4],
+            ["1 га жапырақты орман тәулігіне 2 кг фитонцидті, ал қылқан жапырақты 2,5 есе көп. 1 тонна фитонцидті алу үшін қанша гектар қарағай егу керек?",
+                "A)	100 га",
+                "B)	200 га",
+                "C)	300 га",
+                "D)	400 га",
+                "E)	500 га", ,
+                2],
+            ["Үйрек 70 күнде 4 кг-ға дейін салмақ қосса, 35	күнде	ол	қанша	салмақ	қосады?",
+                "A)	1 кг",
+                "B)	1,5 кг",
+                "C)	2 кг",
+                "D)	2,5 кг",
+                "E)	2,5 кг",
+
+                3],
+            ["Егер компостқа 150 құрт отырғызылатын болса, 1 жыл ішінде алуға болатын жаңбырлы құрттардың биомассасы қандай? Ал олардың саны жыл бойы 1000 есе артады. Бір құрттың орташа салмағы 0, 5 г.",
+                "A)	75 кг",
+                "B)	80 кг",
+                "C)	85 кг",
+                "D)	90 кг",
+                "E)	95 кг",
+                1],
+
+        ], qQuantity = questions.length, tAnswers = 0, wAnswers = 0;
+
+        function goNext(N) { // N = номер вопроса
+            document.getElementById('qBlock').innerHTML = ""; // Очищаем блок вопросов
+            var qElem = questions[N].length - 2, i = 1; // Кол-во в массиве минус вопрос и счетчик
+            var e = document.getElementById('qBlock');
+            var addQ = document.createElement('h3'); // заголовок, id из номера вопроса
+            addQ.id = 'head' + N;
+            e.appendChild(addQ);
+            document.getElementById('head' + N).innerHTML = questions[N][i - 1]; // вписываем вопрос
+            while (qElem >= i) {
+                var addP = document.createElement('p'); // абзацы
+                addP.id = 'p' + i;
+                e.appendChild(addP);
+                var addInput = document.createElement('input'); // инпуты
+                addInput.type = 'radio';
+                addInput.name = 'a';
+                addInput.value = i;
+                document.getElementById('p' + i).appendChild(addInput);
+                document.getElementById('p' + i).insertAdjacentHTML("BeforeEnd", ' ' + questions[N][i]); // вопросы
+                i++;
+            }
+            document.getElementById('btn').innerHTML = "<input type='button' value='Проверить' onclick='submit(" + N + ")' />";
+        }
+
+        function submit(N) { // Проверяем ответы
+            var varQuantity = (document.getElementsByName('a').length), oneVar = 0;
+            while (oneVar <= varQuantity) {
+                if (document.getElementsByName('a')[oneVar].checked == false) {
+                    oneVar++;
+                }
+                else {
+                    var all = questions[N].length - 1;
+                    var t = questions[N][all]; // правильный ответ
+                    if (document.getElementsByName('a')[oneVar].value == t) {
+                        document.getElementById('p' + t).className = 'tt';
+                        tAnswers++;
+                    } else {
+                        var ff = oneVar + 1;
+                        document.getElementById('p' + t).className = 'tt';
+                        document.getElementById('p' + ff).className = 'ff';
+                        wAnswers++;
+                    }
+                    break;
+                }
+            }
+            N++;
+            if (N == qQuantity) {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Перейти к результатам' onclick='toResults()' />";
+            } else {
+                document.getElementById('btn').innerHTML = "<input type='button' id='next' value='Следующий вопрос' onclick='goNext(" + N + ")' />";
+            }
+        }
+
+        function toResults() {
+            document.getElementById('qBlock').innerHTML = "<h3>Тест пройден!</h3>";
+            document.getElementById('btn').innerHTML = "<h4>Резултаттар:</h4>Дұрыс жауаптар: " + tAnswers + "<br>Дұрыс емес жауаптар: " + wAnswers + " ";
+            tAnswers = 0, wAnswers = 0;
+        }
+    </script>
+
+    </script1>
+    <div class="matem">
+        <div id="qBlock">
+            <h2>Тест №1 <br>«Экологиялық есептер»</h2>
+        </div>
+        <div id="rezultat">
+        </div>
+        <div id='btn'>
+            <input type="button" value="Бастау" onclick="goNext(0)" />
+
+        </div>
+    </div>
+
+
+    <!-- <div class="services-cards">
+        <div class="cards-row">
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 1</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos ratione nisi error
+                        numquam
+                        laudantium perspiciatis nihil iure saepe!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                <div class="card-text">
+                    <h1>card 2</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore
+                        aspernatur
+                        fuga,</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./images/Images/services-icon.png" alt="">
+                </script1> -->
+
+</html>
